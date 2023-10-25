@@ -1,5 +1,7 @@
 import React from 'react'
 import styles from './Post.module.css'
+import Comentario from './Comentario'
+
 const Post = () => {
   return (
     <article className={styles.post}>
@@ -33,6 +35,12 @@ const Post = () => {
           <button type="submit">Publicar</button>
         </footer>
       </form>
+
+      <div className={styles.commentList}>
+        <Comentario />
+        <Comentario />
+        <Comentario />
+      </div>
     </article>
   )
 }
