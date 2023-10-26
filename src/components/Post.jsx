@@ -1,13 +1,14 @@
 import React from 'react'
 import styles from './Post.module.css'
 import Comentario from './Comentario'
+import Avatar from './Avatar'
 
 const Post = () => {
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <img className={styles.avatar} src="https://github.com/felipeamorimdev.png" />
+         <Avatar  src="http://github.com/felipe.png"/>
           <div className={styles.authorInfo}>
             <strong>Felipe Amorim</strong>
             <span>Web Developer</span>
