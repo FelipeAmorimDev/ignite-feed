@@ -1,30 +1,42 @@
+import { format, formatDistanceToNow } from 'date-fns'
+import ptBR from 'date-fns/locale/pt-BR'
+
 import React from 'react'
 import styles from './Post.module.css'
 import Comentario from './Comentario'
 import Avatar from './Avatar'
 
-const Post = () => {
+
+
+const Post = ({author, content, publishedAt}) => {
+  //Procurar
+  // onst publishedDateFormatted = new Intl.DateTimeFormat("pt-BR"
+  const publishedDateFormatted = format(publishedAt, "d 'de' LLLL 'ás' HH:mm'h'",{
+    locale: ptBR
+  })
+  const publisedDateRelativeToNow = formatDistanceToNow(publishedAt, {
+    locale: ptBR,
+    addSuffix: true
+  })
+
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-         <Avatar  src="http://github.com/felipe.png"/>
+         <Avatar  src={author.avatarUrl}/>
           <div className={styles.authorInfo}>
-            <strong>Felipe Amorim</strong>
-            <span>Web Developer</span>
+            <strong>{author.name}</strong>
+            <span>{author.role}</span>
           </div>
         </div>
-        <time title="25 de Outubro ás 19:32h" dateTime='2023-10-25 19:32:00'>Publicado há 1h</time>
+        <time title={publishedDateFormatted} dateTime={publishedAt.toISOString()}>{publisedDateRelativeToNow}</time>
       </header>
       <div className={styles.content}>
-        <p>Fala galeraa 👋</p>
-        <p>Acabei de subir mais um projeto no meu portifa. É um projeto que fiz no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀</p>
-        <p>👉{" "}<a href="">jane.design/doctorcare</a></p>
-        <p>
-          <a href="">#novoprojeto{" "}</a>
-          <a href="">#nlw{" "}</a>
-          <a href="">#rocketseat</a>
-        </p>
+        {content.map((line) => {
+          return line.type === 'paragraph' 
+            ? <p>{line.content}</p>
+            : <p><a href="">{line.content}</a></p>
+        })}
       </div>
       <form className={styles.commentForm}>
         <strong>Deixe seu feedback</strong>
