@@ -5,19 +5,26 @@ import React from 'react'
 import styles from './Post.module.css'
 import Comentario from './Comentario'
 import Avatar from './Avatar'
-
+//Procurar
+  // onst publishedDateFormatted = new Intl.DateTimeFormat("pt-BR"
 
 
 const Post = ({author, content, publishedAt}) => {
-  //Procurar
-  // onst publishedDateFormatted = new Intl.DateTimeFormat("pt-BR"
+  const [comments, setComments] = React.useState([1,2,3])
+
   const publishedDateFormatted = format(publishedAt, "d 'de' LLLL 'ás' HH:mm'h'",{
     locale: ptBR
   })
+
   const publisedDateRelativeToNow = formatDistanceToNow(publishedAt, {
     locale: ptBR,
     addSuffix: true
   })
+
+  const handlePostComments = (e) => {
+    e.preventDefault()
+    setComments((previous) => [...previous, comments.length +1])
+  }
 
   return (
     <article className={styles.post}>
@@ -38,7 +45,7 @@ const Post = ({author, content, publishedAt}) => {
             : <p><a href="">{line.content}</a></p>
         })}
       </div>
-      <form className={styles.commentForm}>
+      <form className={styles.commentForm} onSubmit={handlePostComments}>
         <strong>Deixe seu feedback</strong>
 
         <textarea
@@ -50,9 +57,9 @@ const Post = ({author, content, publishedAt}) => {
       </form>
 
       <div className={styles.commentList}>
-        <Comentario />
-        <Comentario />
-        <Comentario />
+        {comments.map((_) => {
+          return <Comentario />
+        })}
       </div>
     </article>
   )
