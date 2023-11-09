@@ -24,7 +24,7 @@ const Post = ({author, content, publishedAt}) => {
 
   const handlePostComments = (e) => {
     e.preventDefault()
-    
+
     setComments((previous) => [...previous, newCommentText])
     setNewCommentText('')
   }
@@ -48,8 +48,8 @@ const Post = ({author, content, publishedAt}) => {
       <div className={styles.content}>
         {content.map((line) => {
           return line.type === 'paragraph' 
-            ? <p>{line.content}</p>
-            : <p><a href="">{line.content}</a></p>
+            ? <p key={line.content}>{line.content}</p>
+            : <p key={line.content}><a href="">{line.content}</a></p>
         })}
       </div>
       <form className={styles.commentForm} onSubmit={handlePostComments}>
@@ -67,7 +67,7 @@ const Post = ({author, content, publishedAt}) => {
 
       <div className={styles.commentList}>
         {comments.map((comment) => {
-          return <Comentario content={comment} />
+          return <Comentario key={comment} content={comment} />
         })}
       </div>
     </article>
