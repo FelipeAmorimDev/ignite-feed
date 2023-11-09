@@ -3,7 +3,7 @@ import styles from './Comentario.module.css'
 import { ThumbsUp, Trash } from 'phosphor-react'
 import Avatar from './Avatar'
 
-const Comentario = () => {
+const Comentario = ({content}) => {
   return (
     <div className={styles.comment}>
       <Avatar  src="http://github.com/pedro.png" hasBorder={false}/>
@@ -19,7 +19,7 @@ const Comentario = () => {
               <Trash size={20} />
             </button>
           </header>
-          <p>Muito bom Devon, parabéns!! 👏👏</p>
+          <p>{content}</p>
         </div>
 
         <footer>

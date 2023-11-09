@@ -10,7 +10,8 @@ import Avatar from './Avatar'
 
 
 const Post = ({author, content, publishedAt}) => {
-  const [comments, setComments] = React.useState([1,2,3])
+  const [comments, setComments] = React.useState([])
+  const [newCommentText, setNewCommentText] = React.useState('')
 
   const publishedDateFormatted = format(publishedAt, "d 'de' LLLL 'ás' HH:mm'h'",{
     locale: ptBR
@@ -23,7 +24,13 @@ const Post = ({author, content, publishedAt}) => {
 
   const handlePostComments = (e) => {
     e.preventDefault()
-    setComments((previous) => [...previous, comments.length +1])
+    
+    setComments((previous) => [...previous, newCommentText])
+    setNewCommentText('')
+  }
+
+  const handleNewCommentChange = (e) => {
+    setNewCommentText(e.target.value)
   }
 
   return (
@@ -49,6 +56,8 @@ const Post = ({author, content, publishedAt}) => {
         <strong>Deixe seu feedback</strong>
 
         <textarea
+          value={newCommentText}
+          onChange={handleNewCommentChange}
           placeholder='Deixe um comentário'
         />
         <footer>
@@ -57,8 +66,8 @@ const Post = ({author, content, publishedAt}) => {
       </form>
 
       <div className={styles.commentList}>
-        {comments.map((_) => {
-          return <Comentario />
+        {comments.map((comment) => {
+          return <Comentario content={comment} />
         })}
       </div>
     </article>
