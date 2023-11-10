@@ -10,7 +10,9 @@ import Avatar from './Avatar'
 
 
 const Post = ({author, content, publishedAt}) => {
-  const [comments, setComments] = React.useState([])
+  const [comments, setComments] = React.useState([
+    'Post muito bacana!'
+  ])
   const [newCommentText, setNewCommentText] = React.useState('')
 
   const publishedDateFormatted = format(publishedAt, "d 'de' LLLL 'ás' HH:mm'h'",{
@@ -31,6 +33,19 @@ const Post = ({author, content, publishedAt}) => {
 
   const handleNewCommentChange = (e) => {
     setNewCommentText(e.target.value)
+    e.target.setCustomValidity('')
+  }
+
+  const handleNewCommentInvalid = (e) => {
+    e.target.setCustomValidity('O comentario não pode ser enviado vazio.')
+  }
+
+  const deleteComment = (commentToDelete) => {
+    const commentsWithoutDeletedOne = comments.filter((comment) => {
+      return comment !== commentToDelete
+    })
+
+    setComments(commentsWithoutDeletedOne)
   }
 
   return (
@@ -59,15 +74,23 @@ const Post = ({author, content, publishedAt}) => {
           value={newCommentText}
           onChange={handleNewCommentChange}
           placeholder='Deixe um comentário'
+          onInvalid={handleNewCommentInvalid}
+          required
         />
         <footer>
-          <button type="submit">Publicar</button>
+          <button type="submit" disabled={!newCommentText}>Publicar</button>
         </footer>
       </form>
 
       <div className={styles.commentList}>
         {comments.map((comment) => {
-          return <Comentario key={comment} content={comment} />
+          return (
+          <Comentario 
+            key={comment} 
+            content={comment} 
+            onDeleteComment={deleteComment}
+          />
+          )
         })}
       </div>
     </article>
